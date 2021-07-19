@@ -1,3 +1,4 @@
+drop database `QuanLyBanHang`;
 create database `QuanLyBanHang`;
 use QuanLyBanHang;
 create table Customer(
@@ -17,8 +18,9 @@ pName varchar(30) not null,
 pPrice float not null
 );
 create table OrderDetail(
-oID int not null,
-pID int not null,
+oID int not null ,
+pID int not null ,
+CONSTRAINT orderDetail_pk PRIMARY KEY (oID, pID),
 odQTY int not null,
 foreign key (oID) references `Order`(oID),
 foreign key (pID) references `Product`(pID));
