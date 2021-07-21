@@ -46,6 +46,6 @@ insert into class
 (4, 'RDBMS', 10, 1);
 insert into mark(sub_id, student_id, mark, exam_times)
 value(1, 1, 8, 1),
-       (1, 2, 10, 2),
+       (1, 2, 9, 2),
        (2, 1, 12, 1);
 
