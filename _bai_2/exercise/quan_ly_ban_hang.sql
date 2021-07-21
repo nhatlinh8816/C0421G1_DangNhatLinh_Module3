@@ -1,26 +1,26 @@
-drop database `QuanLyBanHang`;
-create database `QuanLyBanHang`;
-use QuanLyBanHang;
+
+create database quan_ly_ban_hang;
+use quan_ly_ban_hang;
 create table Customer(
-cID int not null auto_increment primary key,
-cName varchar(30) not null,
-cAge int not null );
+customer_id int not null auto_increment primary key,
+customer_name varchar(30) not null,
+customer_age int not null );
 create table `Order`(
-oID int not null auto_increment primary key,
-cID int not null,
-oDate datetime not null,
-oTotalPrice float,
-foreign key (cID) references Customer(cID)
+order_id int not null auto_increment primary key,
+customer_customer_id int not null,
+order_date datetime not null,
+order_total_price float,
+foreign key (customer_customer_id) references Customer(customer_id)
 );
 create table `Product`(
-pID int not null auto_increment primary key,
-pName varchar(30) not null,
-pPrice float not null
+product_id int not null auto_increment primary key,
+product_name varchar(30) not null,
+product_price float not null
 );
-create table OrderDetail(
-oID int not null ,
-pID int not null ,
-CONSTRAINT orderDetail_pk PRIMARY KEY (oID, pID),
-odQTY int not null,
-foreign key (oID) references `Order`(oID),
-foreign key (pID) references `Product`(pID));
+create table order_detail(
+order_order_id int not null ,
+product_product_id int not null ,
+CONSTRAINT orderDetail_pk PRIMARY KEY (order_order_id, product_product_id),
+order_detail_qty int not null,
+foreign key (order_order_id) references `Order`(order_id),
+foreign key (product_product_id) references `Product`(product_id));
