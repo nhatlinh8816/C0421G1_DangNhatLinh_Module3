@@ -62,5 +62,24 @@ loai_dichvu_loai_dichvu_id int,
 trangthai varchar(45),
 foreign key (kieuthue_kieuthue_id) references kieuthue(kieuthue_id),
 foreign key (loai_dichvu_loai_dichvu_id) references loai_dichvu(loai_dichvu_id));
+create table hopdong(
+hopdong_id int primary key not null auto_increment,
+nhanvien_nhanvien_id int,
+khachhang_khachhang_id int,
+dichvu_dichvu_id int,
+hopdong_start_date datetime,
+hopdong_end_date datetime,
+tien_dat_coc int,
+foreign key (nhanvien_nhanvien_id) references nhanvien(nhanvien_id),
+foreign key (khachhang_khachhang_id) references khachhang(khachhang_id),
+foreign key (dichvu_dichvu_id) references dichvu(dichvu_id));
+create table hopdong_chitiet(
+hopdong_chitiet_id int primary key not null auto_increment,
+hopdong_hopdong_id int,
+dichvu_dikem_dichvu_dikem_id int,
+soluong int,
+foreign key (hopdong_hopdong_id) references hopdong(hopdong_id),
+foreign key (dichvu_dikem_dichvu_dikem_id) references dichvu_dikem(dichvu_dikem_id));
+
 
 
