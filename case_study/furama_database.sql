@@ -1,0 +1,3 @@
+create database furama_resort_database;
+use furama_resort_database;
+create table nhanvien
