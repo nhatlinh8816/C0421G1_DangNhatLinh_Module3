@@ -100,16 +100,47 @@ use furama_resort_database;
  and month(hopdong.hopdong_start_date)  not in (1,2,3,4,5,6,7,8,9) 
  group by khachhang.khachhang_id ;
  
- -- Task 13: 13.	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng. 
+ -- Task 13: Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng. 
  -- (Lưu ý là có thể có nhiều dịch vụ có số lần sử dụng nhiều như nhau).
  
- select dichvu_dikem_id,dichvu_dikem_name,count(hopdong_chitiet.soluong)
+ select dichvu_dikem_id,dichvu_dikem_name,sum(hopdong_chitiet.soluong)
  from dichvu_dikem
  join hopdong_chitiet on dichvu_dikem.dichvu_dikem_id = hopdong_chitiet.dichvu_dikem_dichvu_dikem_id
  group by dichvu_dikem.dichvu_dikem_id
- having count(hopdong_chitiet.soluong) >= all(select count(hopdong_chitiet.soluong) from dichvu_dikem
+ having sum(hopdong_chitiet.soluong) >= all(select sum(hopdong_chitiet.soluong) from dichvu_dikem
  join hopdong_chitiet on dichvu_dikem.dichvu_dikem_id = hopdong_chitiet.dichvu_dikem_dichvu_dikem_id
- group by dichvu_dikem.dichvu_dikem_id )
+ group by dichvu_dikem.dichvu_dikem_id );
+ 
+ -- Task 14:Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất.
+ -- Thông tin hiển thị bao gồm IDHopDong, TenLoaiDichVu, TenDichVuDiKem, SoLanSuDung
+ 
+ select hopdong.hopdong_id,dichvu.dichvu_name,dichvu_dikem.dichvu_dikem_name,sum(hopdong_chitiet.soluong)
+ from hopdong join dichvu on hopdong.dichvu_dichvu_id = dichvu.dichvu_id
+ join hopdong_chitiet on hopdong.hopdong_id = hopdong_chitiet.hopdong_hopdong_id
+ join dichvu_dikem on hopdong_chitiet.dichvu_dikem_dichvu_dikem_id = dichvu_dikem.dichvu_dikem_id
+ group by dichvu_dikem.dichvu_dikem_id
+ having sum(hopdong_chitiet.soluong) = 1;
+ 
+ -- Task 15:Hiển thi thông tin của tất cả nhân viên bao gồm IDNhanVien, HoTen, TrinhDo, TenBoPhan, SoDienThoai, DiaChi 
+ -- mới chỉ lập được tối đa 3 hợp đồng từ năm 2018 đến 2019.
+ 
+ select nhanvien.nhanvien_id,nhanvien.nhanvien_name,trinhdo.trinhdo_name,nhanvien.nhanvien_phone_number,nhanvien.nhanvien_address,
+ bophan.bophan_name
+ from nhanvien join hopdong on nhanvien.nhanvien_id = hopdong.nhanvien_nhanvien_id
+ join bophan on nhanvien.bophan_bophan_id = bophan.bophan_id
+ join trinhdo on nhanvien.trinhdo_trinhdo_id = trinhdo.trinhdo_id
+ where year(hopdong_start_date) in (2018,2019)
+ group by hopdong.nhanvien_nhanvien_id
+ having count(hopdong.hopdong_id) <= 3;
+ 
+
+ 
+ -- Task 16: Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019
+ delete from nhanvien
+ where nhanvien.nhanvien_id not in (select hopdong.nhanvien_nhanvien_id from hopdong where year(hopdong_start_date) in (2018,2019))
+ 
+ 
+ 
  
 
  
