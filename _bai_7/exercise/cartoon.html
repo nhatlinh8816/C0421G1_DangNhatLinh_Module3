@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web xem phim</title>
+    <link rel="stylesheet" href="grid_view.css">
+</head>
+<body>
+
+<div class="row color_light_gray">
+<!--    row này chiếm 12 phần-->
+    <div class="col-12 header">Phim <span class="chu_hoat_hinh">Hoạt hình</span></div>
+</div>
+<div class="row" style="margin-top: 5px">
+    <div class="col-12 color_light_gray align_center">Phim hoạt hình| Phim hoạt hình yêu thích| Nhân vật hoạt hình| Góp ý</div>
+</div>
+<div class="row">
+<!--    Chia row này thành 2 phần, một phần chiếm 3 cột, một phần chiếm 9 cột-->
+    <div class="col-3">
+<!--        chia phần này thành 4 row-->
+        <div class="row">
+<!--            Nếu row chỉ chứa 1 phần thì reset trở về col 12-->
+<!--            Lưu ý: Không dùng row để chứa nội dung mà để cột chứa-->
+            <div class="col-12">
+                <video width="100%"  controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                </video>
+                <h4>Title video</h4>
+                <p>Video1</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <video width="100%" controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                </video>
+                <h4>Title video</h4>
+                <p>Video2</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <video width="100%"  controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                </video>
+                <h4>Title video</h4>
+                <p>Video3</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <video width="100%"  controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                </video>
+                <h4>Title video</h4>
+                <p>Video4</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-9">
+<!--        phần này chỉ chứa 1 dòng-->
+        <div class="row">
+            <div class="col-12">
+                <video width="100%"  controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                </video>
+                <h4>Title video</h4>
+                <p>Video4</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row color_light_gray">
+    <!--    row này chiếm 12 phần-->
+    <div class="col-12 footer align_center" >&copy; 2010 cartoon.com.tv. All rights reserved.</div>
+</div>
+</body>
+</html>
