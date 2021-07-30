@@ -20,7 +20,7 @@
 /* những class nào bắt đầu bằng ="col-" để mặc định là float left*/
 [class*="col-"]{
     float: left;
-    padding: 15px;
+    padding: 5px;
 }
 .row::after{
     clear: both;
@@ -34,6 +34,9 @@
 }
 .header{
     font-size: 20px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
 }
 
 .color_light_gray{
@@ -61,7 +64,12 @@
 .sector{
     background-color: white;
     color: black;
+    margin-top: 30px;
 }
 .ads{
     margin-top: 10px;
+}
+.position_fix{
+    position: fixed;
+    top: 0px;
 }
