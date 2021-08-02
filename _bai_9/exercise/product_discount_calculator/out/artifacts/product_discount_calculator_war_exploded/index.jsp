@@ -11,7 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <form action="/discount_servlet" method="get">
+  <form action="/discount_servlet" method="post">
     <p>Product Description</p>
     <input type="text" name="descriptionProduct">
     <p>List Price</p>
