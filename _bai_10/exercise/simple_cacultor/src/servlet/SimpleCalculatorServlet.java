@@ -19,31 +19,31 @@ public class SimpleCalculatorServlet extends HttpServlet {
             String subtend = "+";
             double result = numberOne+numberTwo;
             request.setAttribute("Subtend",subtend);
-            request.setAttribute("Result",result);
+            request.setAttribute("result",result);
             request.getRequestDispatcher("result.jsp").forward(request,response);
         }
         if (operator.equals("subtraction")){
             String subtend = "-";
             double result = numberOne-numberTwo;
             request.setAttribute("Subtend",subtend);
-            request.setAttribute("Result",result);
+            request.setAttribute("result",result);
             request.getRequestDispatcher("result.jsp").forward(request,response);
         }
         if (operator.equals("multiplication")){
             String subtend = "x";
             double result = numberOne*numberTwo;
             request.setAttribute("Subtend",subtend);
-            request.setAttribute("Result",result);
+            request.setAttribute("result",result);
             request.getRequestDispatcher("result.jsp").forward(request,response);
         }
         if (operator.equals("divide")) {
             String subtend = "/";
             try {
                 double result = numberOne / numberTwo;
-                request.setAttribute("Result", result);
+                request.setAttribute("result", result);
                 }
             catch (Exception e) {
-                System.out.println("Có lỗi"+ e);
+                request.setAttribute("message", e);
             }
             request.setAttribute("Subtend", subtend);
             request.getRequestDispatcher("result.jsp").forward(request, response);
