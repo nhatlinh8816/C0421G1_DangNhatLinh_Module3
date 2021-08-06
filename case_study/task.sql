@@ -29,8 +29,9 @@ use furama_resort_database;
  left join hopdong_chitiet on hopdong.hopdong_id = hopdong_chitiet.hopdong_hopdong_id
  left join dichvu_dikem on hopdong_chitiet.dichvu_dikem_dichvu_dikem_id =dichvu_dikem.dichvu_dikem_id
  left join dichvu on hopdong.dichvu_dichvu_id = dichvu.dichvu_id group by khachhang.khachhang_name ,hopdong.hopdong_id);
- -- group by bảng vừa tạo theo name
- select id,`name`,hạng,maHD,tenDV,ngayBĐ,ngayKT ,sum(Tong_tien) from temp group by `name`;
+
+ -- group by bảng vừa tạo theo id
+ select id,`name`,hạng,maHD,tenDV,ngayBĐ,ngayKT ,sum(Tong_tien) from temp group by `id`;
  
  -- Task 6: 6.	Hiển thị IDDichVu, TenDichVu, DienTich, ChiPhiThue, TenLoaiDichVu của tất cả các loại Dịch vụ chưa từng được 
  -- Khách hàng thực hiện đặt từ quý 1 của năm 2019 (Quý 1 là tháng 1, 2, 3).
@@ -137,19 +138,156 @@ use furama_resort_database;
  
  -- Task 16: Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019
  delete from nhanvien
- where nhanvien.nhanvien_id not in (select hopdong.nhanvien_nhanvien_id from hopdong where year(hopdong_start_date) in (2018,2019))
+ where nhanvien.nhanvien_id not in (select hopdong.nhanvien_nhanvien_id from hopdong where year(hopdong_start_date) in (2017,2019));
+ 
+ -- Tasck 17: Cập nhật thông tin những khách hàng có TenLoaiKhachHang từ  Platinium lên Diamond, 
+ -- chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2019 là lớn hơn 10.000.000 VNĐ.
  
  
+ -- tạo một bảng tạm lưu dữ liệu khách hàng có tổng tiền trong năm 2019 > 10tr đặt tên là tongtien_2019_lon_hon_10tr 
+ create temporary table tongtien_2019_lon_hon_10tr 
+ (select id,`name`,hạng,maHD,tenDV,ngayBĐ,ngayKT ,sum(Tong_tien) from temp 
+ where year(ngayBĐ) = 2019 
+ group by maHD
+ having sum(Tong_tien) >=10000000 );
+
+select * from tongtien_2019_lon_hon_10tr; 
+-- update dựa theo id_loai khach = 2 và có id trong bảng tongtien_2019_lon_hon_10tr vừa tạo;
+ update khachhang
+ set loaikhach_loaikhach_id = 1
+ where loaikhach_loaikhach_id = 2 and khachhang_id in (select id from tongtien_2019_lon_hon_10tr );
  
+  -- Task 18.	Xóa những khách hàng có hợp đồng trước năm 2016 (chú ý ràng buộc giữa các bảng).
+   -- Xóa khóa ngoại cũ
+alter table hopdong
+DROP CONSTRAINT hopdong_ibfk_2;
+
+  -- Bổ sung khóa ngoại mới thêm on delete cascade
+alter table hopdong
+add constraint hopdong_ibfk_2 foreign key (khachhang_khachhang_id) references khachhang(khachhang_id) on delete cascade;
+ 
+  -- Xóa khóa ngoại cũ
+ alter table hopdong_chitiet
+DROP CONSTRAINT hopdong_chitiet_ibfk_1;
+
+-- Bổ sung khóa ngoại mới thêm on delete cascade
+alter table hopdong_chitiet
+add constraint hopdong_chitiet_ibfk_1 foreign key (hopdong_hopdong_id) references hopdong(hopdong_id) on delete cascade;
+  
+create temporary table khachhang_hd_truoc2016
+(select khachhang_id 
+from khachhang 
+join hopdong on khachhang.khachhang_id = hopdong.khachhang_khachhang_id
+where year(hopdong.hopdong_start_date) < 2016);
+
+select* from khachhang_hd_truoc2016;
+delete from khachhang
+where khachhang.khachhang_id in (select khachhang_id 
+from khachhang_hd_truoc2016);
+  
+ -- Task 19: Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi
+ 
+ create temporary table dichvu_dikem_2019
+(select dichvu_dikem_id,dichvu_dikem_name,soluong,hopdong_start_date,hopdong.hopdong_id
+from hopdong_chitiet
+join dichvu_dikem on hopdong_chitiet.dichvu_dikem_dichvu_dikem_id = dichvu_dikem.dichvu_dikem_id
+join hopdong on  hopdong_chitiet.hopdong_hopdong_id =hopdong.hopdong_id
+where year(hopdong_start_date) = 2019
+group by hopdong_chitiet_id);
+
+ create temporary table dichvu_dikem_2019_so_luong_lon_hon10
+(select*,sum(soluong) from dichvu_dikem_2019
+group by dichvu_dikem_id
+having sum(soluong)>=10);
+
+select* from dichvu_dikem_2019_so_luong_lon_hon10;
+
+update dichvu_dikem
+set dichvu_dikem_price = dichvu_dikem_price*2
+where dichvu_dikem_id 
+in 
+(select dichvu_dikem_id from dichvu_dikem_2019_so_luong_lon_hon10);
+
+-- Task 20: 20.	Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, 
+-- thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi
+
+ select nhanvien_id as id,nhanvien_name as name,nhanvien_email as email 
+ ,nhanvien_phone_number as phone ,nhanvien_date_of_birth as dOb,nhanvien_address as address
+ from nhanvien
+ union all
+ select khachhang_id,khachhang_name,khachhang_email,khachhang_phone_number,khachhang_date_of_birth,khachhang_address
+ from khachhang;
+ 
+ -- Task 21:Tạo khung nhìn có tên là V_NHANVIEN để lấy được thông tin của tất cả các nhân viên có địa chỉ là “Hải Châu” 
+ -- và đã từng lập hợp đồng cho 1 hoặc nhiều Khách hàng bất kỳ  với ngày lập hợp đồng là “12/12/2019”
+ 
+ create view V_NHANVIEN
+ as 
+ select*
+ from nhanvien 
+ join hopdong on nhanvien.nhanvien_id = hopdong.nhanvien_nhanvien_id
+ where nhanvien_address = "Hải Châu" and hopdong_start_date = "2019-12-12";
+ 
+ select*
+ from V_NHANVIEN;
+ 
+ -- Task 22.Thông qua khung nhìn V_NHANVIEN thực hiện cập nhật địa chỉ thành “Liên Chiểu” 
+ -- đối với tất cả các Nhân viên được nhìn thấy bởi khung nhìn này.
+ 
+ update V_NHANVIEN
+ set nhanvien_address = "Liên Chiểu";
+ 
+ -- Task 23.Tạo Store procedure Sp_1 Dùng để xóa thông tin của một Khách hàng nào đó 
+ -- với Id Khách hàng được truyền vào như là 1 tham số của Sp_1
+ 
+ delimiter //
+ create procedure delete_khachhang(delete_id int)
+ begin
+	delete from	khachhang
+    where khachhang_id = delete_id;
+ end; 
+ //
  
 
+//
+call delete_khachhang(6);
+ //
+ -- Task 24: Tạo Store procedure Sp_2 Dùng để thêm mới vào bảng HopDong với yêu cầu Sp_2 
+ -- phải thực hiện kiểm tra tính hợp lệ của dữ liệu bổ sung, với nguyên tắc không được trùng khóa chính 
+ -- và đảm bảo toàn vẹn tham chiếu đến các bảng liên quan
  
- 
- 
- 
- 
- 
- 
+  delimiter //
+ create procedure Sp_2 (new_nhanvien_id int, new_khachhang_id int, new_dichvu_id int, 
+						new_hopdong_start_date date, new_hopdong_end_date date, new_tiendatcoc int)
+begin
+	
+    if new_nhanvien_id  in (select nhanvien_id from nhanvien) 
+		and new_khachhang_id  in (select khachhang_id from khachhang)
+        and new_dichvu_id in (select dichvu_id from dichvu)
+    then 
+    insert into hopdong (nhanvien_nhanvien_id, khachhang_khachhang_id , dichvu_dichvu_id, hopdong_start_date, hopdong_end_date,tien_dat_coc)
+    value (new_nhanvien_id , new_khachhang_id, new_dichvu_id, new_hopdong_start_date, new_hopdong_end_date, new_tiendatcoc);
+	else 
+		SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = "Vui lòng nhập lại";
+end if;
+end;
+//
+drop procedure Sp_2;
+//
+call Sp_2 (15,1,1,'2019-12-12','2019-12-20',1000000);
+call Sp_2 (1,1,20,'2019-12-12','2019-12-20',1000000);
+call Sp_2 (1,1,1,'2019-12-12','2019-12-20',1000000);
+call Sp_2 (15,1,1,'2019-12-12','2019-12-20',1000000);
+//
+call Sp_2 (1,1,1,'2019-12-12','2019-12-20',1000000);
+
+//
+-- Task 28.	Tạo Store procedure Sp_3 để tìm các dịch vụ được thuê bởi khách hàng với loại dịch vụ là “Room” từ đầu năm 2015 đến hết năm 2019 
+-- để xóa thông tin của các dịch vụ đó (tức là xóa các bảng ghi trong bảng DichVu) và xóa những HopDong sử dụng dịch vụ liên quan 
+-- (tức là phải xóa những bản gi trong bảng HopDong) và những bản liên quan khác
+
+
+
  
  
  

@@ -31,7 +31,7 @@ nhanvien_name varchar(45) not null,
 vitri_vitri_id int,
 trinhdo_trinhdo_id int,
 bophan_bophan_id int,
-nhanvien_date_of_birth datetime,
+nhanvien_date_of_birth date,
 nhanvien_cmnd varchar(45),
 nhanvien_salary int,
 nhanvien_phone_number varchar(45),
@@ -44,7 +44,7 @@ create table khachhang(
 khachhang_id int primary key not null auto_increment,
 loaikhach_loaikhach_id int,
 khachhang_name varchar(45) not null,
-khachhang_date_of_birth datetime,
+khachhang_date_of_birth date,
 khachhang_cmnd varchar(45),
 khachhang_phone_number varchar(45),
 khachhang_email varchar(45),
@@ -71,15 +71,16 @@ hopdong_start_date datetime,
 hopdong_end_date datetime,
 tien_dat_coc int,
 foreign key (nhanvien_nhanvien_id) references nhanvien(nhanvien_id),
-foreign key (khachhang_khachhang_id) references khachhang(khachhang_id),
+foreign key (khachhang_khachhang_id) references khachhang(khachhang_id) ,
 foreign key (dichvu_dichvu_id) references dichvu(dichvu_id));
 create table hopdong_chitiet(
 hopdong_chitiet_id int primary key not null auto_increment,
 hopdong_hopdong_id int,
 dichvu_dikem_dichvu_dikem_id int,
 soluong int,
-foreign key (hopdong_hopdong_id) references hopdong(hopdong_id),
+foreign key (hopdong_hopdong_id) references hopdong(hopdong_id) ,
 foreign key (dichvu_dikem_dichvu_dikem_id) references dichvu_dikem(dichvu_dikem_id));
+
 
 
 
