@@ -10,4 +10,6 @@ public interface UserServiceImp {
     User selectUser(int id);
     boolean updateUser(User user);
     boolean removeUser(User user);
+    List<User> viewALlUserByCountry(String country);
+    List<User> viewALlUserOrderByName();
 }

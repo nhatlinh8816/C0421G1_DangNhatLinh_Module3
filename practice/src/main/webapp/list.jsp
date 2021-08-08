@@ -15,6 +15,14 @@
 <body>
 <h2>User List</h2>
 <a href="/users?actionClient=create">Create new User</a>
+<br/>
+<a href="/users?actionClient=orderByName">Order By Name</a>
+<form action="" method="post">
+    <input type="hidden" name="actionClient" value="viewByCountry">
+    <p>Tìm tên theo quốc gia</p>
+    <input type="text" name="UserCountry" value="">
+    <input type="submit" value="Tìm Kiếm">
+</form>
 <table border="1">
     <tr>
         <th>ID</th>

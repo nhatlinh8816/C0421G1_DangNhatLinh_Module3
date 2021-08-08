@@ -42,4 +42,14 @@ public class UserService implements UserServiceImp{
         result = userRepositoryImp.removeUser(user);
         return result;
     }
+
+    @Override
+    public List<User> viewALlUserByCountry(String country) {
+        return userRepositoryImp.viewALlUserByCountry(country);
+    }
+
+    @Override
+    public List<User> viewALlUserOrderByName() {
+        return userRepositoryImp.viewALlUserOrderByName();
+    }
 }

@@ -42,6 +42,10 @@ public class UserServlet extends HttpServlet {
                     deleteUser = saveDeleteUser(request);
                     userServiceImp.removeUser(deleteUser);
                     viewAllUser(request,response);
+                    break;
+                case "viewByCountry":
+                    viewAllUserByCountry(request,response);
+                    break;
                     }
         }
 
@@ -63,6 +67,9 @@ public class UserServlet extends HttpServlet {
                     break;
                 case "delete":
                     formRemoveUser(request,response);
+                    break;
+                case "orderByName":
+                    viewAllUserOrderByName(request,response);
                     break;
                 default:
                     viewAllUser(request,response);
@@ -183,5 +190,33 @@ public class UserServlet extends HttpServlet {
         deleteUser.setCountry(deleteCountry);
 
         return deleteUser;
+
+    }
+
+    //phuong thuc hien thi tat ca cac user theo quoc gia;
+    protected void viewAllUserByCountry(HttpServletRequest request, HttpServletResponse response){
+        String country = request.getParameter("UserCountry");
+        request.setAttribute("UserListServletByCountry",userServiceImp.viewALlUserByCountry(country));
+        try {
+            request.getRequestDispatcher("listByCountry.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //phuong thuc hien thi tat ca cac user sap xep theo ten;
+    protected void viewAllUserOrderByName(HttpServletRequest request, HttpServletResponse response){
+        //thuc hien truyen du lieu sang tang view trong MVC
+        request.setAttribute("UserListServletOrderByName",userServiceImp.viewALlUserOrderByName());
+        //tao 1 file listOrderByName.jsp de hien thi du lieu tren;
+        try {
+            request.getRequestDispatcher("listOrderByName.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

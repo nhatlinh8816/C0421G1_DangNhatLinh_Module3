@@ -110,4 +110,61 @@ public class UserRepository implements UserRepositoryImp {
         }
         return deleteRow>0? true:false;
     }
+
+    @Override
+    public List<User> viewALlUserByCountry(String country) {
+        //tao 1 array list de nhan data
+        List<User> userListByCountry = new ArrayList<>();
+        try {
+            // dung baseRes de ket noi java voi sql
+            PreparedStatement preparedStatement
+                    = baseRepository.getConnection().prepareStatement("select id,name,email,country from `users` where country =?");
+
+            preparedStatement.setString(1,country);
+            //truy van du lieu
+            ResultSet resultSet = preparedStatement.executeQuery();
+            //khoi tao doi tuong user de lay du lieu tu resultset
+            User user = null;
+            //chay vong lap de xuat tung dong du lieu tu resultset vao user;
+            while (resultSet.next()){
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setCountry(resultSet.getString("country"));
+                userListByCountry.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userListByCountry;
+    }
+
+    @Override
+    public List<User> viewALlUserOrderByName() {
+
+        //tao 1 array list de nhan data
+        List<User> userListOrderByName = new ArrayList<>();
+        try {
+            // dung baseRes de ket noi java voi sql
+            PreparedStatement preparedStatement
+                    = baseRepository.getConnection().prepareStatement("select id,name,email,country from `users` order by name;");
+            //truy van du lieu
+            ResultSet resultSet = preparedStatement.executeQuery();
+            //khoi tao doi tuong user de lay du lieu tu resultset
+            User user = null;
+            //chay vong lap de xuat tung dong du lieu tu resultset vao user;
+            while (resultSet.next()){
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setCountry(resultSet.getString("country"));
+                userListOrderByName.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userListOrderByName;
+    }
 }

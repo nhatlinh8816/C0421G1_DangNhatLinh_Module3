@@ -10,4 +10,6 @@ public interface UserRepositoryImp {
     boolean updateUser(User user);
     User selectUser(int id);
     boolean removeUser(User user);
+    List<User> viewALlUserByCountry(String country);
+    List<User> viewALlUserOrderByName();
 }
