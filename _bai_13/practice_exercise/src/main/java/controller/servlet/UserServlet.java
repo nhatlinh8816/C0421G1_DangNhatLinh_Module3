@@ -1,8 +1,8 @@
 package controller.servlet;
 
 import model.User;
+import service.UserServiceImplement;
 import service.UserService;
-import service.UserServiceImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "UserServlet",urlPatterns = {"","/users"})
 public class UserServlet extends HttpServlet {
     //tao 1 doi tuong userSerImp de thuc hien cac chuc nang;
-    UserServiceImp userServiceImp = new UserService();
+    UserService userServiceImp = new UserServiceImplement();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String actionClient = request.getParameter("actionClient");
         if (actionClient==null){

@@ -1,8 +1,8 @@
 package controller.servlet;
 
 import model.User;
+import service.UserServiceImplement;
 import service.UserService;
-import service.UserServiceImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "UserServlet",urlPatterns = {"","/users"})
 public class UserServlet extends HttpServlet {
     //tao 1 doi tuong userSerImp de thuc hien cac chuc nang;
-    UserServiceImp userServiceImp = new UserService();
+    UserService userService = new UserServiceImplement();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String actionClient = request.getParameter("actionClient");
         if (actionClient==null){
@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
                 case "update":
                     User updateUser;
                     updateUser = saveUpdateUser(request);
-                    if (userServiceImp.updateUser(updateUser)) {
+                    if (userService.updateUser(updateUser)) {
                         request.setAttribute("msg","Update Successfully");
                         viewAllUser(request,response);
                     }else {
@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
                 case "delete":
                     User deleteUser;
                     deleteUser = saveDeleteUser(request);
-                    userServiceImp.removeUser(deleteUser);
+                    userService.removeUser(deleteUser);
                     viewAllUser(request,response);
                     break;
                 case "viewByCountry":
@@ -79,13 +79,13 @@ public class UserServlet extends HttpServlet {
     //phuong thuc chon 1 user de xem,sua,xoa
     protected void selectUser(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("userId")) ;
-        request.setAttribute("SelectUser",userServiceImp.selectUser(id));
+        request.setAttribute("SelectUser", userService.selectUser(id));
     }
 
     //phuong thuc hien thi tat ca cac user;
     protected void viewAllUser(HttpServletRequest request, HttpServletResponse response){
         //thuc hien truyen du lieu sang tang view trong MVC
-        request.setAttribute("UserListServlet",userServiceImp.viewAllUser());
+        request.setAttribute("UserListServlet", userService.viewAllUser());
         //tao 1 file list.jsp de hien thi du lieu tren;
         try {
             request.getRequestDispatcher("list.jsp").forward(request,response);
@@ -119,7 +119,7 @@ public class UserServlet extends HttpServlet {
         User newUser = new User(newID,newName,newEmail,newCountry);
 
         //luu du lieu vao database;
-        userServiceImp.createUser(newUser);
+        userService.createUser(newUser);
     }
 
 
@@ -196,7 +196,7 @@ public class UserServlet extends HttpServlet {
     //phuong thuc hien thi tat ca cac user theo quoc gia;
     protected void viewAllUserByCountry(HttpServletRequest request, HttpServletResponse response){
         String country = request.getParameter("UserCountry");
-        request.setAttribute("UserListServletByCountry",userServiceImp.viewALlUserByCountry(country));
+        request.setAttribute("UserListServletByCountry", userService.viewALlUserByCountry(country));
         try {
             request.getRequestDispatcher("listByCountry.jsp").forward(request,response);
         } catch (ServletException e) {
@@ -209,7 +209,7 @@ public class UserServlet extends HttpServlet {
     //phuong thuc hien thi tat ca cac user sap xep theo ten;
     protected void viewAllUserOrderByName(HttpServletRequest request, HttpServletResponse response){
         //thuc hien truyen du lieu sang tang view trong MVC
-        request.setAttribute("UserListServletOrderByName",userServiceImp.viewALlUserOrderByName());
+        request.setAttribute("UserListServletOrderByName", userService.viewALlUserOrderByName());
         //tao 1 file listOrderByName.jsp de hien thi du lieu tren;
         try {
             request.getRequestDispatcher("listOrderByName.jsp").forward(request,response);
