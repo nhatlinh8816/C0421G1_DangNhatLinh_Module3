@@ -26,8 +26,8 @@
     Employee
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" href="#">Create new Employee</a></li>
-    <li><a class="dropdown-item" href="#">Show List of Employee</a></li>
+    <li><a class="dropdown-item" href="/users?actionClient=create">Create new Employee</a></li>
+    <li><a class="dropdown-item" href="/users?actionClient=viewAll">Show List of Employee</a></li>
     </ul>
     </li>
     <li class="nav-item dropdown mx-4">
@@ -35,8 +35,8 @@
     Customer
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-    <li><a class="dropdown-item" href="#">Create new Customer</a></li>
-    <li><a class="dropdown-item" href="#">Show List of Customer</a></li>
+    <li><a class="dropdown-item" href="customers?actionClient=create">Create new Customer</a></li>
+    <li><a class="dropdown-item" href="customers?actionClient=viewAll">Show List of Customer</a></li>
     </ul>
     </li>
     <li class="nav-item dropdown mx-4">

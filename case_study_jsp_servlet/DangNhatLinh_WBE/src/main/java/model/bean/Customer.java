@@ -28,6 +28,18 @@ public class Customer {
         this.addressCustomer = addressCustomer;
     }
 
+    public Customer(int typeCustomer, String nameCustomer, int genderCustomer, String codeCustomer, String dateOfBirthCustomer, String identifyCodeCustomer, String phoneNumberCustomer, String emailCustomer, String addressCustomer) {
+        this.typeCustomer = typeCustomer;
+        this.nameCustomer = nameCustomer;
+        this.genderCustomer = genderCustomer;
+        this.codeCustomer = codeCustomer;
+        this.dateOfBirthCustomer = dateOfBirthCustomer;
+        this.identifyCodeCustomer = identifyCodeCustomer;
+        this.phoneNumberCustomer = phoneNumberCustomer;
+        this.emailCustomer = emailCustomer;
+        this.addressCustomer = addressCustomer;
+    }
+
     public int getIdCustomer() {
         return idCustomer;
     }
