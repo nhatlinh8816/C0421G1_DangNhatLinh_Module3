@@ -4,7 +4,7 @@ public class Customer {
     private int idCustomer;
     private int typeCustomer;
     private String nameCustomer;
-    private int genderCustomer;
+    private boolean genderCustomer;
     private String codeCustomer;
     private String dateOfBirthCustomer;
     private String identifyCodeCustomer;
@@ -15,20 +15,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int idCustomer, int typeCustomer, String nameCustomer, int genderCustomer, String codeCustomer, String dateOfBirthCustomer, String identifyCodeCustomer, String phoneNumberCustomer, String emailCustomer, String addressCustomer) {
-        this.idCustomer = idCustomer;
-        this.typeCustomer = typeCustomer;
-        this.nameCustomer = nameCustomer;
-        this.genderCustomer = genderCustomer;
-        this.codeCustomer = codeCustomer;
-        this.dateOfBirthCustomer = dateOfBirthCustomer;
-        this.identifyCodeCustomer = identifyCodeCustomer;
-        this.phoneNumberCustomer = phoneNumberCustomer;
-        this.emailCustomer = emailCustomer;
-        this.addressCustomer = addressCustomer;
-    }
-
-    public Customer(int typeCustomer, String nameCustomer, int genderCustomer, String codeCustomer, String dateOfBirthCustomer, String identifyCodeCustomer, String phoneNumberCustomer, String emailCustomer, String addressCustomer) {
+    public Customer(int typeCustomer, String nameCustomer, boolean genderCustomer, String codeCustomer, String dateOfBirthCustomer, String identifyCodeCustomer, String phoneNumberCustomer, String emailCustomer, String addressCustomer) {
         this.typeCustomer = typeCustomer;
         this.nameCustomer = nameCustomer;
         this.genderCustomer = genderCustomer;
@@ -64,11 +51,11 @@ public class Customer {
         this.nameCustomer = nameCustomer;
     }
 
-    public int getGenderCustomer() {
+    public boolean isGenderCustomer() {
         return genderCustomer;
     }
 
-    public void setGenderCustomer(int genderCustomer) {
+    public void setGenderCustomer(boolean genderCustomer) {
         this.genderCustomer = genderCustomer;
     }
 

@@ -21,18 +21,37 @@ public class CustomerServlet extends HttpServlet {
         }
         switch (actionClient){
             case "create":
-                saveCustomer(request,response);
+                saveNewCustomer(request,response);
                 viewAllCustomer(request,response);
                 break;
 //            case "viewAll":
 //                viewAllCustomer(request,response);
 //                break;
-//            case "update":
-//                formUpdateUser(request,response);
-//                break;
-//            case "delete":
-//                formRemoveUser(request,response);
-//                break;
+            case "update":
+                Customer updateCustomer;
+                updateCustomer = targetCustomer(request);
+                if (customerService.updateCustomer(updateCustomer)){
+                    request.setAttribute("msg","Update Sucessfully");
+                    request.getRequestDispatcher("customerCRUD/update.jsp").forward(request,response);
+                }else {
+                    request.setAttribute("msg","Update Failed");
+                    request.setAttribute("UpdateFailedUser",updateCustomer);
+                    request.getRequestDispatcher("customerCRUD/update.jsp").forward(request,response);
+                }
+                createFormCustomer(request,response);
+                break;
+            case "delete":
+                int deleteId =Integer.parseInt( request.getParameter("id"));
+                if (customerService.deleteCustomer(deleteId)){
+                    request.setAttribute("msg","Delete Sucessfully");
+                    viewAllCustomer(request,response);
+                }else {
+                    request.setAttribute("msg","Delete Failed");
+                    viewAllCustomer(request,response);
+                }
+
+
+                break;
 //            case "orderByName":
 //                viewAllUserOrderByName(request,response);
 //                break;
@@ -53,11 +72,13 @@ public class CustomerServlet extends HttpServlet {
             case "viewAll":
                 viewAllCustomer(request,response);
                 break;
-//            case "update":
-//                formUpdateUser(request,response);
-//                break;
+            case "update":
+                formUpdateCustomer(request,response);
+                break;
 //            case "delete":
-//                formRemoveUser(request,response);
+//                int deleteId =Integer.parseInt( request.getParameter("customerId"));
+//                customerService.deleteCustomer(deleteId);
+//                viewAllCustomer(request,response);
 //                break;
 //            case "orderByName":
 //                viewAllUserOrderByName(request,response);
@@ -65,6 +86,11 @@ public class CustomerServlet extends HttpServlet {
 //            default:
 //                viewAllUser(request,response);
         }
+    }
+    //phuong thuc chon 1 customer de xem,sua,xoa
+    protected void selectCustomer(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("customerId")) ;
+        request.setAttribute("SelectCustomer", customerService.selectCustomer(id));
     }
     protected void createFormCustomer(HttpServletRequest request,HttpServletResponse response){
         try {
@@ -76,14 +102,11 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    protected void saveCustomer(HttpServletRequest request,HttpServletResponse response){
-
-    }
 
     protected void viewAllCustomer(HttpServletRequest request,HttpServletResponse response){
         request.setAttribute("CustomerListServlet", customerService.viewAllCustomer());
         try {
-            request.getRequestDispatcher("customerCRUD/list.jsp").forward(request,response);
+            request.getRequestDispatcher("customerCRUD/list1.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -95,7 +118,7 @@ public class CustomerServlet extends HttpServlet {
         //tao bien de nhan du lieu moi duoc them vao:
         Integer newType = Integer.parseInt(request.getParameter("newCustomerType"));
         String newName =  request.getParameter("newCustomerName");
-        Integer newGender = Integer.parseInt(request.getParameter("newCustomerGender"));
+        boolean newGender = Boolean.parseBoolean(request.getParameter("newCustomerGender"));
         String newCode = request.getParameter("newCustomerCode");
         String newDateOfBirth = request.getParameter("newCustomerDOB");
         String newIdentify = request.getParameter("newCustomerIdentify");
@@ -111,4 +134,43 @@ public class CustomerServlet extends HttpServlet {
         //luu du lieu vao database;
         customerService.createCustomer(newCustomer);
     }
+
+    //tao 1 form de update 1 user;
+    protected void formUpdateCustomer(HttpServletRequest request, HttpServletResponse response){
+        selectCustomer(request);
+        try {
+            request.getRequestDispatcher("customerCRUD/update.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    protected Customer targetCustomer(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("CustomerId")) ;
+        int type =Integer.parseInt(request.getParameter("newCustomerType")) ;
+        String name = request.getParameter("newCustomerName");
+        boolean gender =Boolean.parseBoolean(request.getParameter("newCustomerGender"));
+        String code = request.getParameter("newCustomerCode");
+        String dOB = request.getParameter("newCustomerDOB");
+        String identify = request.getParameter("newCustomerIdentify");
+        String phoneNumber = request.getParameter("newCustomerPhoneNumber");
+        String email = request.getParameter("newCustomerEmail");
+        String address = request.getParameter("newCustomerAddress");
+        Customer targetCustomer = new Customer();
+
+        targetCustomer.setIdCustomer(id);
+        targetCustomer.setTypeCustomer(type);
+        targetCustomer.setNameCustomer(name);
+        targetCustomer.setGenderCustomer(gender);
+        targetCustomer.setCodeCustomer(code);
+        targetCustomer.setDateOfBirthCustomer(dOB);
+        targetCustomer.setIdentifyCodeCustomer(identify);
+        targetCustomer.setPhoneNumberCustomer(phoneNumber);
+        targetCustomer.setEmailCustomer(email);
+        targetCustomer.setAddressCustomer(address);
+
+        return targetCustomer;
+
+    }
+
+
 }
