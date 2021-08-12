@@ -1,6 +1,6 @@
 package service.customer;
 
-import model.bean.Customer;
+import model.bean.customer.Customer;
 import repository.customer.CustomerRepository;
 import repository.customer.CustomerRepositoryImp;
 

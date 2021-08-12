@@ -21,7 +21,8 @@ loaikhach_id int primary key not null auto_increment,
 loaikhach_name varchar(45) not null);
 create table kieuthue(
 kieuthue_id int primary key not null auto_increment,
-kieuthue_name varchar(45) not null);
+kieuthue_name varchar(45) not null,
+kieuthue_gia double);
 create table loai_dichvu(
 loai_dichvu_id int primary key not null auto_increment,
 loai_dichvu_name varchar(45) not null);
@@ -54,12 +55,14 @@ create table dichvu(
 dichvu_id int primary key not null auto_increment,
 dichvu_name varchar(45) not null,
 dichvu_area int,
-dichvu_floor int,
+dichvu_chiphithue double,
 dichvu_number_person int,
-dichvu_chiphithue int,
 kieuthue_kieuthue_id int,
 loai_dichvu_loai_dichvu_id int,
+dichvu_tieuchuan varchar(45),
 trangthai varchar(45),
+dichvu_pool_area double,
+dichvu_floor int,
 foreign key (kieuthue_kieuthue_id) references kieuthue(kieuthue_id),
 foreign key (loai_dichvu_loai_dichvu_id) references loai_dichvu(loai_dichvu_id));
 create table hopdong(
