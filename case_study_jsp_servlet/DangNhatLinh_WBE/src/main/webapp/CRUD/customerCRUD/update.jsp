@@ -41,11 +41,9 @@
                     <label for="inputType" class="form-label">Type Custormer </label>
                     <select id="inputType" class="form-select" name="newCustomerType" value="${SelectCustomer.typeCustomer}">
                         <option selected>Choose...</option>
-                        <option value="1">Diamond</option>
-                        <option value="2">Platinum</option>
-                        <option value="3">Gold</option>
-                        <option value="4">Silver</option>
-                        <option value="5">Member</option>
+                        <c:forEach items="${CustomerTypeList}" var="customerType">
+                            <option value="${customerType.idCustomerType}">${customerType.nameCustomerType}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-lg-6">

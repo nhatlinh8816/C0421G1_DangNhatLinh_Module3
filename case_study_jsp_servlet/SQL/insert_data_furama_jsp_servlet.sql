@@ -11,27 +11,24 @@ insert into kieuthue (kieuthue_name,kieuthue_gia)
 value("Năm",120000000),("Tháng",10000000),("Ngày",300000),("Giờ",10000);
 insert into loai_dichvu (loai_dichvu_name)
 value("Villa"),("House"),("Room");
+insert into  `user`(user_name,`password`)
+value("SM","SM123"),("HC","HC123"),("PV","PV123"),("QL","QL123");
 insert into nhanvien
 value
-(1,"Linh",3,3,3,"1994-2-13","001",1000000,"091","linh@gmail.com","Hải Châu"),
-(2,"Quan",1,3,2,"1995-2-13","002",200000,"092","quan@gmail.com","Hải Châu"),
-(3,"Bao",2,1,1,"1994-2-24","003",3000000,"093","bao@gmail.com","Đà Nẵng"),
-(4,"Kiet",3,4,4,"1995-3-23","004",4000000,"094","binh@gmail.com","Huế"),
-(5,"Nham Doanh Doanh",4,2,1,"2004-2-26","005",5000000,"095","doanh@gmail.com","Quảng Trị"),
-(6,"Lam",3,4,1,"1996-2-23","006",6000000,"096","lam@gmail.com","Đà Nẵng"),
-(7,"Tu",2,1,2,"1998-4-23","007",7000000,"097","minh@gmail.com","Quảng Trị"),
-(8,"Ha",4,1,2,"1995-10-23","008",8000000,"098","ha@gmail.com","DakLak"),
-(9,"Nhat",5,1,2,"2000-10-23","009",9000000,"099","nhat@gmail.com","Quảng Bình"),
-(10,"Diep",6,3,2,"1990-10-12","010",10000000,"010","diep@gmail.com","Quảng Trị");
+(1,"Linh","1994-2-13","001",1000000,"091","linh@gmail.com","Vinh",1,2,1,"SM"),
+(2,"Nam","1993-2-13","001",5000000,"091","ghg@gmail.com","SG",2,3,2,"SM"),
+(3,"Oanh","1974-2-13","001",6000000,"091","rtrt@gmail.com","Hải Châu",3,4,3,"SM"),
+(4,"Long","1984-2-13","001",7000000,"091","www@gmail.com","Hà Nội",4,1,4,"SM"),
+(5,"Thu","1993-2-13","001",8000000,"091","rrrr@gmail.com","Hải Châu",5,2,4,"SM");
 insert into khachhang
 value
-(1,1,"Tuan","1950-5-13","011","081","tuan@gmail.com","Quảng Ngãi"),
-(2,1,"Nam","1980-6-13","012","082","nam@gmail.com","Quảng Ninh"),
-(3,1,"Hai","2004-5-14","013","083","hai@gmail.com","Đà Nẵng"),
-(4,2,"Son","1996-4-15","014","084","son@gmail.com","Quảng Trị"),
-(5,5,"Ngoc","1999-10-15","015","085","ngoc@gmail.com","Vinh"),
-(6,3,"Vy","1997-10-15","016","086","vy@gmail.com","Huế"),
-(7,4,"Tuan","1970-5-13","017","087","tuandang@gmail.com","Hà Nội");
+(1,1,"Tuan",1,"KH-0001","1950-5-13","011","081","tuan@gmail.com","Quảng Ngãi"),
+(2,1,"Nam",1,"KH-0002","1980-6-13","012","082","nam@gmail.com","Quảng Ninh"),
+(3,1,"Hai",1,"KH-0003","2004-5-14","013","083","hai@gmail.com","Đà Nẵng"),
+(4,2,"Son",1,"KH-0004","1996-4-15","014","084","son@gmail.com","Quảng Trị"),
+(5,5,"Ngoc",0,"KH-0005","1999-10-15","015","085","ngoc@gmail.com","Vinh"),
+(6,3,"Vy",0,"KH-0006","1997-10-15","016","086","vy@gmail.com","Huế"),
+(7,4,"Tuan",1,"KH-0007","1970-5-13","017","087","tuandang@gmail.com","Hà Nội");
 -- insert into dichvu
 -- value 
 -- -- (1,"villa1",400,3,8,10000000,1,1,"Đang sử dụng"),

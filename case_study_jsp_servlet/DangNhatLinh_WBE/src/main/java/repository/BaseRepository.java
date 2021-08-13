@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class BaseRepository {
     private Connection connection;
-    private final String jdbcURL = "jdbc:mysql://localhost:3306/furama_resort_database_servlet";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/furama_resort_database";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "l8i8n1h6@";
 

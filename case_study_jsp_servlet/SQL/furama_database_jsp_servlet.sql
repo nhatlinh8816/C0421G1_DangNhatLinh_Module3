@@ -10,6 +10,17 @@ trinhdo_name varchar(45) not null);
 create table bophan(
 bophan_id int primary key not null auto_increment,
 bophan_name varchar(45) not null);
+create table `role`(
+role_id int primary key not null auto_increment,
+role_name varchar(255) not null);
+create table `user`(
+user_name varchar(255) not null primary key,
+`password` varchar(255));
+create table `user_role`(
+role_role_id int,
+user_user_name varchar(255),
+foreign key (role_role_id) references `role`(role_id),
+foreign key (user_user_name) references`user`(user_name));
 create table dichvu_dikem(
 dichvu_dikem_id int primary key not null auto_increment,
 dichvu_dikem_name varchar(45) not null,
@@ -29,22 +40,26 @@ loai_dichvu_name varchar(45) not null);
 create table nhanvien(
 nhanvien_id int primary key not null auto_increment,
 nhanvien_name varchar(45) not null,
-vitri_vitri_id int,
-trinhdo_trinhdo_id int,
-bophan_bophan_id int,
 nhanvien_date_of_birth date,
 nhanvien_cmnd varchar(45),
-nhanvien_salary int,
+nhanvien_salary double,
 nhanvien_phone_number varchar(45),
 nhanvien_email varchar(45),
 nhanvien_address varchar(45),
+vitri_vitri_id int,
+trinhdo_trinhdo_id int,
+bophan_bophan_id int,
+user_user_name varchar(255),
 foreign key (vitri_vitri_id) references vitri(vitri_id),
 foreign key (trinhdo_trinhdo_id) references trinhdo(trinhdo_id),
-foreign key (bophan_bophan_id) references bophan(bophan_id));
+foreign key (bophan_bophan_id) references bophan(bophan_id),
+foreign key (user_user_name) references `user`(user_name));
 create table khachhang(
 khachhang_id int primary key not null auto_increment,
 loaikhach_loaikhach_id int,
 khachhang_name varchar(45) not null,
+khachhang_gender bit not null,
+khachhang_code varchar(45) not null,
 khachhang_date_of_birth date,
 khachhang_cmnd varchar(45),
 khachhang_phone_number varchar(45),

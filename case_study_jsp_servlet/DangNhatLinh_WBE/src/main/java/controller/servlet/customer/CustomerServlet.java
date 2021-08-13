@@ -142,6 +142,7 @@ public class CustomerServlet extends HttpServlet {
 
     //tao 1 form de update 1 user;
     protected void formUpdateCustomer(HttpServletRequest request, HttpServletResponse response){
+        request.setAttribute("CustomerTypeList",customerTypeService.viewAllCustomerType());
         selectCustomer(request);
         try {
             request.getRequestDispatcher("CRUD/customerCRUD/update.jsp").forward(request,response);

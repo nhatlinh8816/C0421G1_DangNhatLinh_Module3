@@ -33,7 +33,7 @@
                     <th scope="col">Phone Number</th>
                     <th scope="col">Email</th>
                     <th scope="col">Address</th>
-                    <th scope="col" colspan="2">Action</th>
+                    <th scope="col" colspan="2" class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -88,11 +88,12 @@
                         <td>
                             <c:out value="${CustomerObj.addressCustomer}"></c:out>
                         </td>
-                        <td><a href="/customers?actionClient=update&customerId=${CustomerObj.idCustomer}">Update</a></td>
-<%--                        <td><a href="/customers?actionClient=delete&customerId=${CustomerObj.idCustomer}">Delete</a></td>--%>
+                        <td>
+                            <a class="btn btn-primary" href="/customers?actionClient=update&customerId=${CustomerObj.idCustomer}" role="button">Update</a>
+                        </td>
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop" onclick="deleteCustomer(${CustomerObj.idCustomer})">
+                                    data-bs-target="#staticBackdrop" onclick="deleteCustomer('${CustomerObj.idCustomer}','${CustomerObj.nameCustomer}')">
                                 Delete
                             </button>
                         </td>
@@ -114,7 +115,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Do you want delete
+                Do you want delete <input id="name" style="border: none;outline: none ; color: red">
             </div>
             <form action="/customers" method="post">
                 <input type="hidden" name="actionClient" value="delete">
@@ -138,8 +139,9 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script>
-    function deleteCustomer(id) {
+    function deleteCustomer(id,name) {
         document.getElementById("idCustomer").value = id;
+        document.getElementById("name").value = name;
     }
     </script>
 </body>

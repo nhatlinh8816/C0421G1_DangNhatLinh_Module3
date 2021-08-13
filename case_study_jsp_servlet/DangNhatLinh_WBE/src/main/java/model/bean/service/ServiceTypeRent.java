@@ -3,13 +3,15 @@ package model.bean.service;
 public class ServiceTypeRent {
     private int serviceTypeRentId;
     private String serviceTypeRentName;
-
-    public ServiceTypeRent(int serviceTypeRentId, String serviceTypeRentName) {
-        this.serviceTypeRentId = serviceTypeRentId;
-        this.serviceTypeRentName = serviceTypeRentName;
-    }
+    private double serviceTypeRentCost;
 
     public ServiceTypeRent() {
+    }
+
+    public ServiceTypeRent(int serviceTypeRentId, String serviceTypeRentName, double serviceTypeRentCost) {
+        this.serviceTypeRentId = serviceTypeRentId;
+        this.serviceTypeRentName = serviceTypeRentName;
+        this.serviceTypeRentCost = serviceTypeRentCost;
     }
 
     public int getServiceTypeRentId() {
@@ -26,5 +28,13 @@ public class ServiceTypeRent {
 
     public void setServiceTypeRentName(String serviceTypeRentName) {
         this.serviceTypeRentName = serviceTypeRentName;
+    }
+
+    public double getServiceTypeRentCost() {
+        return serviceTypeRentCost;
+    }
+
+    public void setServiceTypeRentCost(double serviceTypeRentCost) {
+        this.serviceTypeRentCost = serviceTypeRentCost;
     }
 }

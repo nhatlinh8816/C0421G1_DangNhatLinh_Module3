@@ -44,8 +44,8 @@
     Service
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-    <li><a class="dropdown-item" href="#">Create new Service</a></li>
-    <li><a class="dropdown-item" href="#">Show List of Service</a></li>
+    <li><a class="dropdown-item" href="service?actionClient=create">Create new Service</a></li>
+    <li><a class="dropdown-item" href="service?actionClient=viewAll">Show List of Service</a></li>
     </ul>
     </li>
     <li class="nav-item dropdown mx-4">
