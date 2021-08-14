@@ -74,7 +74,7 @@
                     <label for="inputFloor" class="form-label">Service Floor</label>
                     <input type="text" class="form-control" id="inputFloor" name="newServiceFloor">
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>

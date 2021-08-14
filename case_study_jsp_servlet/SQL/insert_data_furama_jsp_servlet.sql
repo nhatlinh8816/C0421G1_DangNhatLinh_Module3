@@ -29,9 +29,9 @@ value
 (5,5,"Ngoc",0,"KH-0005","1999-10-15","015","085","ngoc@gmail.com","Vinh"),
 (6,3,"Vy",0,"KH-0006","1997-10-15","016","086","vy@gmail.com","Huế"),
 (7,4,"Tuan",1,"KH-0007","1970-5-13","017","087","tuandang@gmail.com","Hà Nội");
--- insert into dichvu
--- value 
--- -- (1,"villa1",400,3,8,10000000,1,1,"Đang sử dụng"),
+insert into dichvu
+value 
+(1,"villa1",400,10000000,8,1,1,"Basic","Giường cao su",20,4);
 -- -- (2,"house1",200,3,4,5000000,1,2,"Chưa sử dụng"),
 -- -- (3,"room1",100,1,2,3000000,1,3,"Chưa sử dụng"),
 -- -- (4,"villa2",400,3,8,9000000,2,1,"Chưa sử dụng"),
