@@ -19,6 +19,12 @@
     <div class="row">
         <jsp:include page="../../layout/right_list.jsp"></jsp:include>
         <div class="col-lg-10">
+            <form action="/customers" method="post">
+                <input type="hidden" name="actionClient" value="searchByKey">
+                <p>Tìm theo tên</p>
+                <input type="text" name="Key" value="">
+                <input type="submit" value="Tìm Kiếm">
+            </form>
             <table class="table">
                 <h2 class="text-center">List Of Customer</h2>
                 <thead>
@@ -89,6 +95,7 @@
                             <c:out value="${CustomerObj.addressCustomer}"></c:out>
                         </td>
                         <td>
+<%--                            dùng button tag của bootrasp--%>
                             <a class="btn btn-primary" href="/customers?actionClient=update&customerId=${CustomerObj.idCustomer}" role="button">Update</a>
                         </td>
                         <td>

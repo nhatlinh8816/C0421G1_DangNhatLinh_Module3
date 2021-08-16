@@ -3,6 +3,7 @@ package repository.customer;
 import model.bean.customer.Customer;
 import repository.BaseRepository;
 
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -130,5 +131,36 @@ public class CustomerRepositoryImp implements CustomerRepository {
             e.printStackTrace();
         }
         return deleteRow>0? true:false;
+    }
+
+    @Override
+    public List<Customer> findCustomer(String key) {
+        List<Customer> customerListByKey = new ArrayList<>();
+        try {
+            CallableStatement callableStatement
+                    = baseRepository.getConnection().prepareCall("call find_customer_by_name(?);");
+            callableStatement.setString(1,key);
+            ResultSet resultSet = callableStatement.executeQuery();
+            Customer customer = null;
+            while (resultSet.next()){
+                customer = new Customer();
+                customer.setIdCustomer(resultSet.getInt("khachhang_id"));
+                customer.setTypeCustomer(resultSet.getInt("loaikhach_loaikhach_id"));
+                customer.setNameCustomer(resultSet.getString("khachhang_name"));
+                customer.setGenderCustomer(resultSet.getBoolean("khachhang_gender"));
+                customer.setCodeCustomer(resultSet.getString("khachhang_code"));
+                customer.setDateOfBirthCustomer(resultSet.getString("khachhang_date_of_birth"));
+                customer.setIdentifyCodeCustomer(resultSet.getString("khachhang_cmnd"));
+                customer.setPhoneNumberCustomer(resultSet.getString("khachhang_phone_number"));
+                customer.setEmailCustomer(resultSet.getString("khachhang_email"));
+                customer.setAddressCustomer(resultSet.getString("khachhang_address"));
+                customerListByKey.add(customer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return customerListByKey;
     }
 }

@@ -1,7 +1,6 @@
 package controller.servlet.customer;
 
 import model.bean.customer.Customer;
-import model.bean.customer.CustomerType;
 import service.customer.CustomerService;
 import service.customer.CustomerServiceImp;
 import service.customer.CustomerTypeService;
@@ -28,12 +27,14 @@ public class CustomerServlet extends HttpServlet {
                 saveNewCustomer(request,response);
                 viewAllCustomer(request,response);
                 break;
-//            case "viewAll":
-//                viewAllCustomer(request,response);
-//                break;
+            case "searchByKey":
+                findCustomerByKey(request,response);
+                break;
             case "update":
+                //tạo 1 customer nhận giá trị update từ form
                 Customer updateCustomer;
-                updateCustomer = targetCustomer(request);
+                updateCustomer = saveUpdateCustomer(request);
+                //lưu và DB bằng phương thức updateCustomer tạo ở repo truyền tham số đầu vào là updateCustomer
                 if (customerService.updateCustomer(updateCustomer)){
                     request.setAttribute("msg","Update Sucessfully");
                     request.getRequestDispatcher("CRUD/customerCRUD/update.jsp").forward(request,response);
@@ -45,6 +46,7 @@ public class CustomerServlet extends HttpServlet {
                 createFormCustomer(request,response);
                 break;
             case "delete":
+                //lấy id từ modal delete của form list
                 int deleteId =Integer.parseInt( request.getParameter("id"));
                 if (customerService.deleteCustomer(deleteId)){
                     request.setAttribute("msg","Delete Sucessfully");
@@ -93,8 +95,10 @@ public class CustomerServlet extends HttpServlet {
     }
     //phuong thuc chon 1 customer de xem,sua,xoa
     protected void selectCustomer(HttpServletRequest request){
+        //customerId lấy ở list
         int id = Integer.parseInt(request.getParameter("customerId")) ;
         request.setAttribute("SelectCustomer", customerService.selectCustomer(id));
+        //hàm trên trả về 1 customer dựa trên id truyền vào
     }
     protected void createFormCustomer(HttpServletRequest request,HttpServletResponse response){
         request.setAttribute("CustomerTypeList",customerTypeService.viewAllCustomerType());
@@ -150,7 +154,8 @@ public class CustomerServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-    protected Customer targetCustomer(HttpServletRequest request){
+    protected Customer saveUpdateCustomer(HttpServletRequest request){
+        //phương thức trả 1 về 1 customer
         int id = Integer.parseInt(request.getParameter("CustomerId")) ;
         int type =Integer.parseInt(request.getParameter("newCustomerType")) ;
         String name = request.getParameter("newCustomerName");
@@ -177,6 +182,16 @@ public class CustomerServlet extends HttpServlet {
         return targetCustomer;
 
     }
-
+    protected void findCustomerByKey(HttpServletRequest request,HttpServletResponse response){
+        String key = request.getParameter("Key");
+        request.setAttribute("CustomerListServlet", customerService.findCustomer(key));
+        try {
+            request.getRequestDispatcher("CRUD/customerCRUD/list1.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

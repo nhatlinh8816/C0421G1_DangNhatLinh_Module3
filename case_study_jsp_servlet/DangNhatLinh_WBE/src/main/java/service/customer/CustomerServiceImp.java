@@ -32,4 +32,9 @@ public class CustomerServiceImp implements CustomerService {
     public boolean deleteCustomer(int id) {
         return customerRepository.deleteCustomer(id);
     }
+
+    @Override
+    public List<Customer> findCustomer(String key) {
+        return customerRepository.findCustomer(key);
+    }
 }

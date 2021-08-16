@@ -10,4 +10,5 @@ public interface CustomerService {
     Customer selectCustomer(int id);
     boolean updateCustomer(Customer customer);
     boolean deleteCustomer(int id);
+    List<Customer> findCustomer(String key);
 }

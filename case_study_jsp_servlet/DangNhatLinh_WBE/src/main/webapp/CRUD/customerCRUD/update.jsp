@@ -25,14 +25,13 @@
             <form class="row g-3 mx-3" action="/customers" method="post" >
                 <input type="hidden" name="actionClient" value="update" >
                 <input type="hidden" name="CustomerId" value="${SelectCustomer.idCustomer}">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <label for="inputName" class="form-label">Name of Customer</label>
                     <input type="text" class="form-control" id="inputName" name="newCustomerName" value="${SelectCustomer.nameCustomer}">
                 </div>
                 <div class="col-lg-6">
                     <label for="inputGender" class="form-label">Gender</label>
                     <select id="inputGender" class="form-select" name="newCustomerGender" value="${SelectCustomer.genderCustomer}">
-                        <option selected>Choose...</option>
                         <option value=true>Male</option>
                         <option value=false>Female</option>
                     </select>
@@ -40,7 +39,6 @@
                 <div class="col-lg-6">
                     <label for="inputType" class="form-label">Type Custormer </label>
                     <select id="inputType" class="form-select" name="newCustomerType" value="${SelectCustomer.typeCustomer}">
-                        <option selected>Choose...</option>
                         <c:forEach items="${CustomerTypeList}" var="customerType">
                             <option value="${customerType.idCustomerType}">${customerType.nameCustomerType}</option>
                         </c:forEach>
